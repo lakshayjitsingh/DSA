@@ -1,37 +1,12 @@
 class Solution {
 public:
-    vector<int> productExceptSelf(vector<int>& nums) {
-        int zeroCount = 0;
-        long long product = 1;
-        vector<int> ans(nums.size());
-
-        // Calculate product of all non-zero elements
-        for (int num : nums) {
-            if (num == 0)
-                zeroCount++;
-            else
-                product *= num;
-        }
-
-        // Build answer
-        for (int i = 0; i < nums.size(); i++) {
-
-            if (zeroCount > 1) {
-                ans[i] = 0;
-            }
-
-            else if (zeroCount == 1) {
-                if (nums[i] == 0)
-                    ans[i] = product;
-                else
-                    ans[i] = 0;
-            }
-
-            else {
-                ans[i] = product / nums[i];
-            }
-        }
-
-        return ans;
-    }
+vector<int> productExceptSelf(vector<int>& nums) {
+int n = nums.size();
+vector<int> res(n, 1);
+int prefix = 1;
+for (int i = 0; i < n; i++) { res[i] = prefix; prefix *= nums[i]; }
+int suffix = 1;
+for (int i = n-1; i >= 0; i--) { res[i] *= suffix; suffix *= nums[i]; }
+return res;
+}
 };
